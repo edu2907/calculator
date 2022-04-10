@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+body {
+    margin: 0px;
+    height: 100vh;
+    background-color: #F7EDB0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#calc {
+    background-color: #E5BF89;
+    width: 441px;
+    height: 625px;
+    border: 20px solid #393223;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+#screen {
+    background-color: #60CC71;
+    width: 352px;
+    height: 118px;
+}
+#button_container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 367px;
+    height: 335px;
+    gap: 5px;
+}
+.button {
+    width: 88px;
+    height: 67px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+.button > span {
+    font-size: 26px;
+    color: white;
+    font-family: 'Press Start 2P';
+}
+.number {
+    background-color: #675A4A;
+}
+.special {
+    background-color: #6470E1;
+}
+.operator {
+    background-color: #DB5C00;
+}
+#clear {
+    background-color: #E2442E;
+}
+#equalSign {
+    background-color: #3D8F28;
+}
