@@ -14,15 +14,26 @@ body {
     height: 625px;
     border: 20px solid #393223;
     border-radius: 20px;
+    box-shadow: inset 0 0 20px rgb(0, 0, 0);
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
 #screen {
-    background-color: #60CC71;
+    background-color: #4e9c61c5;
+    padding: 4px;
     width: 352px;
     height: 118px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.671);
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+#screen > span {
+    font-family: 'Press Start 2P';
+    font-size: 40px;
+    color: rgba(0, 0, 0, 0.767);
 }
 #button_container {
     display: flex;
