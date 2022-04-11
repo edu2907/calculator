@@ -1,3 +1,5 @@
+const screenNum = document.querySelector("#screen > #num") 
+const screenPreviousNum = document.querySelector("#screen > #previousNum")
 const number_buttons = [
     document.getElementById('zero'),
     document.getElementById('one'),
@@ -12,17 +14,42 @@ const number_buttons = [
 ]
 number_buttons.forEach(button => {
     button.addEventListener('click', function (event) {
-        storeNumber(number_buttons.indexOf(button))
+        storeAlg(number_buttons.indexOf(button))
     })
 })
-let operation = ''
-storeNumber = (algarism) => {
-    operation += String(algarism)
-    updateScreen(operation)
+let newNum = ''
+storeAlg = (algarism) => {
+    newNum += String(algarism)
+    screenNum.innerText = newNum   
 }
-const screen = document.querySelector("#screen > span") 
-updateScreen =  operation => {
-    screen.innerText = operation
+
+const opList = {
+    add: {
+        button: document.getElementById('add'),
+        sign: '+'
+    },
+    subtract: {
+        button: document.getElementById('subtract'),
+        sign: '-',
+    },
+    multiply: {
+        button: document.getElementById('multiply'),
+        sign: 'x',
+    },
+    divide: {
+        button: document.getElementById('divide'),
+        sign: '/',
+    },
+}
+for(let operator in opList) {
+    opList[operator].button.addEventListener('click', function() { 
+        addOperator(opList[operator])
+    })
+}
+function addOperator (operator) {
+    screenPreviousNum.innerText = newNum + operator.sign
+    newNum = ''
+    screenNum.innerText = '0'
 }
 
 function add(num1, num2) {
