@@ -1,5 +1,12 @@
+const operation = {
+    firstNum: 0, 
+    calc: null,
+    secondNum: 0,
+}
 const screenNum = document.querySelector("#screen > #num") 
 const screenPreviousNum = document.querySelector("#screen > #previousNum")
+
+//Numbers Buttons
 const number_buttons = [
     document.getElementById('zero'),
     document.getElementById('one'),
@@ -23,22 +30,27 @@ storeAlg = (algarism) => {
     screenNum.innerText = newNum   
 }
 
+//Operators button
 const opList = {
     add: {
         button: document.getElementById('add'),
-        sign: '+'
+        sign: '+',
+        calc: () => operation.firstNum + operation.secondNum
     },
     subtract: {
         button: document.getElementById('subtract'),
         sign: '-',
+        calc: () => operation.firstNum - operation.secondNum
     },
     multiply: {
         button: document.getElementById('multiply'),
         sign: 'x',
+        calc: () => operation.firstNum * operation.secondNum
     },
     divide: {
         button: document.getElementById('divide'),
         sign: '/',
+        calc: () => operation.firstNum / operation.secondNum
     },
 }
 for(let operator in opList) {
@@ -46,24 +58,17 @@ for(let operator in opList) {
         addOperator(opList[operator])
     })
 }
+let opIsBeingUsed = false
 function addOperator (operator) {
+    if(opIsBeingUsed) {
+    operation.secondNum = Number(newNum)
+    newNum = String(operation.calc())
+    } else {
+        opIsBeingUsed = true
+    }
     screenPreviousNum.innerText = newNum + operator.sign
-    newNum = ''
     screenNum.innerText = '0'
-}
-
-function add(num1, num2) {
-    return num1 + num2
-}
-function subtract(num1, num2) {
-    return num1 - num2
-}
-function multiply(num1, num2) {
-    return num1 * num2
-}
-function divide(num1, num2) {
-    return num1 / num2
-}
-function operate(operator, num1, num2,) {
-    return operator(num1, num2)
+    operation.firstNum = Number(newNum)
+    operation.calc = operator.calc
+    newNum = ''
 }
