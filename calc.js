@@ -36,11 +36,12 @@ storeAlg = (algarism) => {
 
 //Float button 
 const floatBtn = document.getElementById('float')
-floatBtn.addEventListener('click', function() {
+floatBtn.addEventListener('click', function () {
     canUseFloat('.')
 })
 function canUseFloat(float) {
-    if(newNum == '' || newNum.includes('.')){
+    if (newNum == Infinity) reset()
+    if (newNum == '' || newNum.includes('.')) {
         //do nothing
     } else {
         storeAlg(float)
@@ -62,7 +63,20 @@ const opList = {
     multiply: {
         button: document.getElementById('multiply'),
         sign: 'x',
-        calc: () => operation.firstNum * operation.secondNum
+        calc: () => {
+            let result = operation.firstNum / operation.secondNum
+            const resStr = String(result);
+            if (!resStr.includes('.')) {
+                return result
+            } else {
+                const resLength = resStr.split('.')[1].length;
+                if (resLength > 4) {
+                    return result.toPrecision(4)
+                } else {
+                    return result
+                }
+            }
+        }
     },
     divide: {
         button: document.getElementById('divide'),
@@ -71,7 +85,18 @@ const opList = {
             if (operation.secondNum == 0) {
                 return Infinity
             } else {
-                return operation.firstNum / operation.secondNum
+                let result = operation.firstNum / operation.secondNum
+                const resStr = String(result);
+                if (!resStr.includes('.')) {
+                    return result
+                } else {
+                    const resLength = resStr.split('.')[1].length;
+                    if (resLength > 4) {
+                        return result.toPrecision(4)
+                    } else {
+                        return result
+                    }
+                }
             }
         }
     },
@@ -112,7 +137,7 @@ function operate() {
     screenNum.innerText = newNum
     operation.calc = null
     opIsBeingUsed = false
-    operateBtnPressed = true 
+    operateBtnPressed = true
     screenPreviousNum.innerText = ''
 }
 
