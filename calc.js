@@ -72,3 +72,15 @@ function addOperator (operator) {
     operation.calc = operator.calc
     newNum = ''
 }
+
+// Operate Button
+const operateBtn = document.getElementById('operate')
+operateBtn.addEventListener('click', operate)
+function operate() {
+    operation.secondNum = Number(newNum)
+    newNum = String(operation.calc())
+    screenNum.innerText = newNum
+    operation.calc = null
+    opIsBeingUsed = false
+    screenPreviousNum.innerText = ''
+}
