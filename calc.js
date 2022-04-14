@@ -1,10 +1,10 @@
 let opIsBeingUsed = false
 const operation = {
-    firstNum: null, 
+    firstNum: null,
     calc: null,
     secondNum: null,
 }
-const screenNum = document.querySelector("#screen > #num") 
+const screenNum = document.querySelector("#screen > #num")
 const screenPreviousNum = document.querySelector("#screen > #previousNum")
 let newNum = ''
 
@@ -27,8 +27,24 @@ number_buttons.forEach(button => {
     })
 })
 storeAlg = (algarism) => {
+    if (newNum == Infinity || (operateBtnPressed == true && opIsBeingUsed == false)) {
+        reset()
+    }
     newNum += String(algarism)
-    screenNum.innerText = newNum   
+    screenNum.innerText = newNum
+}
+
+//Float button 
+const floatBtn = document.getElementById('float')
+floatBtn.addEventListener('click', function() {
+    canUseFloat('.')
+})
+function canUseFloat(float) {
+    if(newNum == '' || newNum.includes('.')){
+        //do nothing
+    } else {
+        storeAlg(float)
+    }
 }
 
 //Operators button
@@ -51,33 +67,44 @@ const opList = {
     divide: {
         button: document.getElementById('divide'),
         sign: '/',
-        calc: () => operation.firstNum / operation.secondNum
+        calc: () => {
+            if (operation.secondNum == 0) {
+                return Infinity
+            } else {
+                return operation.firstNum / operation.secondNum
+            }
+        }
     },
 }
-for(let operator in opList) {
-    opList[operator].button.addEventListener('click', function() { 
+for (let operator in opList) {
+    opList[operator].button.addEventListener('click', function () {
         addOperator(opList[operator])
     })
 }
-function addOperator (operator) {
-    if(newNum == '') {
-        newNum = '0'
-    }
-    if(opIsBeingUsed) {
-    operation.secondNum = Number(newNum)
-    newNum = String(operation.calc())
+function addOperator(operator) {
+    if (newNum == Infinity) {
+        reset()
     } else {
-        opIsBeingUsed = true
+        if (newNum == '') {
+            newNum = '0'
+        }
+        if (opIsBeingUsed) {
+            operation.secondNum = Number(newNum)
+            newNum = String(operation.calc())
+        } else {
+            opIsBeingUsed = true
+        }
+        screenPreviousNum.innerText = newNum + operator.sign
+        screenNum.innerText = '0'
+        operation.firstNum = Number(newNum)
+        operation.calc = operator.calc
+        newNum = ''
     }
-    screenPreviousNum.innerText = newNum + operator.sign
-    screenNum.innerText = '0'
-    operation.firstNum = Number(newNum)
-    operation.calc = operator.calc
-    newNum = ''
 }
 
 // Operate Button
 const operateBtn = document.getElementById('operate')
+let operateBtnPressed = false
 operateBtn.addEventListener('click', operate)
 function operate() {
     operation.secondNum = Number(newNum)
@@ -85,6 +112,7 @@ function operate() {
     screenNum.innerText = newNum
     operation.calc = null
     opIsBeingUsed = false
+    operateBtnPressed = true 
     screenPreviousNum.innerText = ''
 }
 
@@ -92,11 +120,12 @@ function operate() {
 const clearBtn = document.getElementById('clear')
 clearBtn.addEventListener('click', reset)
 function reset() {
-    for(let child in operation) {
-        operation.child = null
+    for (let child in operation) {
+        operation[child] = null
     }
     newNum = ''
     opIsBeingUsed = false
+    operateBtnPressed = false
     screenNum.innerText = '0'
     screenPreviousNum.innerText = ''
 }
