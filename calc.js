@@ -1,10 +1,12 @@
+let opIsBeingUsed = false
 const operation = {
-    firstNum: 0, 
+    firstNum: null, 
     calc: null,
-    secondNum: 0,
+    secondNum: null,
 }
 const screenNum = document.querySelector("#screen > #num") 
 const screenPreviousNum = document.querySelector("#screen > #previousNum")
+let newNum = ''
 
 //Numbers Buttons
 const number_buttons = [
@@ -24,7 +26,6 @@ number_buttons.forEach(button => {
         storeAlg(number_buttons.indexOf(button))
     })
 })
-let newNum = ''
 storeAlg = (algarism) => {
     newNum += String(algarism)
     screenNum.innerText = newNum   
@@ -58,8 +59,10 @@ for(let operator in opList) {
         addOperator(opList[operator])
     })
 }
-let opIsBeingUsed = false
 function addOperator (operator) {
+    if(newNum == '') {
+        newNum = '0'
+    }
     if(opIsBeingUsed) {
     operation.secondNum = Number(newNum)
     newNum = String(operation.calc())
@@ -82,5 +85,18 @@ function operate() {
     screenNum.innerText = newNum
     operation.calc = null
     opIsBeingUsed = false
+    screenPreviousNum.innerText = ''
+}
+
+// Clear Button 
+const clearBtn = document.getElementById('clear')
+clearBtn.addEventListener('click', reset)
+function reset() {
+    for(let child in operation) {
+        operation.child = null
+    }
+    newNum = ''
+    opIsBeingUsed = false
+    screenNum.innerText = '0'
     screenPreviousNum.innerText = ''
 }
