@@ -64,7 +64,7 @@ const opList = {
         button: document.getElementById('multiply'),
         sign: 'x',
         calc: () => {
-            let result = operation.firstNum / operation.secondNum
+            let result = operation.firstNum * operation.secondNum
             const resStr = String(result);
             if (!resStr.includes('.')) {
                 return result
@@ -153,4 +153,18 @@ function reset() {
     operateBtnPressed = false
     screenNum.innerText = '0'
     screenPreviousNum.innerText = ''
+}
+// Change Signal Button
+const changeSignBtn = document.getElementById('changeSign')
+changeSignBtn.addEventListener('click', changeSign)
+function changeSign() {
+    if (!newNum == 0) {
+        if (!newNum.includes('-')) {
+            newNum = newNum.padStart(newNum.length + 1, '-')
+            screenNum.innerText = newNum
+        } else {
+            newNum = newNum.replace('-', '')
+            screenNum.textContent = newNum
+        }
+    }
 }
