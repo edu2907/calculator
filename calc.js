@@ -119,11 +119,16 @@ function addOperator(operator) {
         } else {
             opIsBeingUsed = true
         }
-        screenPreviousNum.innerText = newNum + operator.sign
-        screenNum.innerText = '0'
-        operation.firstNum = Number(newNum)
-        operation.calc = operator.calc
-        newNum = ''
+        if (newNum != Infinity) {
+            screenPreviousNum.innerText = newNum + operator.sign
+            screenNum.innerText = '0'
+            operation.firstNum = Number(newNum)
+            operation.calc = operator.calc
+            newNum = ''
+        } else {
+            screenNum.innerText = newNum
+            screenPreviousNum.innerText = ''
+        }
     }
 }
 
@@ -154,6 +159,20 @@ function reset() {
     screenNum.innerText = '0'
     screenPreviousNum.innerText = ''
 }
+
+//Backspace Button
+const backBtn = document.getElementById('backspace')
+backBtn.addEventListener('click', backspace)
+function backspace() {
+    if (newNum == Infinity || operateBtnPressed == true) {
+        reset()
+    }
+    else if (!newNum == '') {
+        newNum = newNum.slice(0, -1)
+        screenNum.innerText = newNum
+    }
+}
+
 // Change Signal Button
 const changeSignBtn = document.getElementById('changeSign')
 changeSignBtn.addEventListener('click', changeSign)
@@ -163,7 +182,6 @@ function changeSign() {
             newNum = newNum.padStart(newNum.length + 1, '-')
             screenNum.innerText = newNum
         } else {
-            newNum = newNum.replace('-', '')
             screenNum.textContent = newNum
         }
     }

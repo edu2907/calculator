@@ -59,6 +59,9 @@ body {
     align-items: center;
     user-select: none;
 }
+#clear {
+    width: 181px;
+}
 .button > span {
     font-size: 26px;
     color: white;
