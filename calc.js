@@ -182,13 +182,14 @@ function changeSign() {
             newNum = newNum.padStart(newNum.length + 1, '-')
             screenNum.innerText = cutStr(newNum, 8)
         } else {
+            newNum = newNum.replace('-', '')
             screenNum.textContent = cutStr(newNum, 8)
         }
     }
 }
 
 function cutStr(str, maxLength) {
-    if ((opIsBeingUsed || newNum.includes('-')) && str.length > 8) {
+    if (newNum.includes('-') && str.length > 8) {
         let sign = str[0]
         maxLength--
         let startIndex = str.length - maxLength
