@@ -31,7 +31,7 @@ storeAlg = (algarism) => {
         reset()
     }
     newNum += String(algarism)
-    screenNum.innerText = newNum
+    screenNum.innerText = cutStr(newNum, 8)
 }
 
 //Float button 
@@ -120,13 +120,13 @@ function addOperator(operator) {
             opIsBeingUsed = true
         }
         if (newNum != Infinity) {
-            screenPreviousNum.innerText = newNum + operator.sign
+            screenPreviousNum.innerText = cutStr(newNum, 22) + operator.sign
             screenNum.innerText = '0'
             operation.firstNum = Number(newNum)
             operation.calc = operator.calc
             newNum = ''
         } else {
-            screenNum.innerText = newNum
+            screenNum.innerText = cutStr(newNum, 8)
             screenPreviousNum.innerText = ''
         }
     }
@@ -139,7 +139,7 @@ operateBtn.addEventListener('click', operate)
 function operate() {
     operation.secondNum = Number(newNum)
     newNum = String(operation.calc())
-    screenNum.innerText = newNum
+    screenNum.innerText = cutStr(newNum, 8)
     operation.calc = null
     opIsBeingUsed = false
     operateBtnPressed = true
@@ -169,7 +169,7 @@ function backspace() {
     }
     else if (!newNum == '') {
         newNum = newNum.slice(0, -1)
-        screenNum.innerText = newNum
+        screenNum.innerText = cutStr(newNum, 8)
     }
 }
 
@@ -180,9 +180,21 @@ function changeSign() {
     if (!newNum == 0) {
         if (!newNum.includes('-')) {
             newNum = newNum.padStart(newNum.length + 1, '-')
-            screenNum.innerText = newNum
+            screenNum.innerText = cutStr(newNum, 8)
         } else {
-            screenNum.textContent = newNum
+            screenNum.textContent = cutStr(newNum, 8)
         }
+    }
+}
+
+function cutStr(str, maxLength) {
+    if ((opIsBeingUsed || newNum.includes('-')) && str.length > 8) {
+        let sign = str[0]
+        maxLength--
+        let startIndex = str.length - maxLength
+        return sign + str.slice(startIndex)
+    } else {
+        let startIndex = str.length > maxLength ? str.length - maxLength : 0
+        return str.slice(startIndex)
     }
 }
