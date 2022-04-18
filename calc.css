@@ -67,18 +67,42 @@ body {
     color: white;
     font-family: 'Press Start 2P';
 }
+.button:active {
+    transform: translateY(2px);
+}
+
 .number {
     background-color: #675A4A;
 }
+.number:active{
+    background-color: #a79073;
+}
+
 .special {
     background-color: #6470E1;
 }
+.special:active {
+    background-color: #8590ee;
+}
+
 .operator {
     background-color: #DB5C00;
 }
+.operator:active {
+    background-color: #ff7615;
+}
+
 #clear {
     background-color: #E2442E;
 }
+#clear:active {
+    background-color: #fa5e4a;
+}
+
 #operate {
     background-color: #3D8F28;
+}
+#operate:active {
+    background-color: #49a831;
+    
 }
