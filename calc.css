@@ -71,38 +71,38 @@ body {
     transform: translateY(2px);
 }
 
-.number {
+.brown {
     background-color: #675A4A;
 }
-.number:active{
+.brown:active, .brown:hover{
     background-color: #a79073;
 }
 
 .special {
     background-color: #6470E1;
 }
-.special:active {
+.special:active, .special:hover {
     background-color: #8590ee;
 }
 
 .operator {
     background-color: #DB5C00;
 }
-.operator:active {
+.operator:active, .operator:hover {
     background-color: #ff7615;
 }
 
 #clear {
     background-color: #E2442E;
 }
-#clear:active {
+#clear:active, #clear:hover{
     background-color: #fa5e4a;
 }
 
 #operate {
     background-color: #3D8F28;
 }
-#operate:active {
+#operate:active, #operate:hover {
     background-color: #49a831;
     
 }

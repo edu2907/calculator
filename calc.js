@@ -9,18 +9,15 @@ const screenPreviousNum = document.querySelector("#screen > #previousNum")
 let newNum = ''
 
 //Numbers Buttons
-const number_buttons = [
-    document.getElementById('zero'),
-    document.getElementById('one'),
-    document.getElementById('two'),
-    document.getElementById('three'),
-    document.getElementById('four'),
-    document.getElementById('five'),
-    document.getElementById('six'),
-    document.getElementById('seven'),
-    document.getElementById('eight'),
-    document.getElementById('nine'),
-]
+let number_buttons = Array.from(document.getElementsByClassName('number'))
+number_buttons.sort((btnA, btnB) => {
+    if (Number(btnA.textContent) > Number(btnB.textContent)) {
+        return 1;
+    } else {
+        return -1
+    }
+})
+
 number_buttons.forEach(button => {
     button.addEventListener('click', function (event) {
         storeAlg(number_buttons.indexOf(button))
@@ -48,7 +45,7 @@ function canUseFloat(float) {
     }
 }
 
-//Operators button
+//Operator buttons
 const opList = {
     add: {
         button: document.getElementById('add'),
@@ -199,3 +196,33 @@ function cutStr(str, maxLength) {
         return str.slice(startIndex)
     }
 }
+
+// Keyboard Support
+const allButtons = Array.from(document.getElementsByClassName('button'))
+document.addEventListener('keydown', (event) => {
+    const isNumber = number_buttons.some(button => {
+        return button.textContent == event.key
+    })
+    const operatorCheck = key => {
+        let exists = false
+        for (operator in opList) {
+            if (opList[operator].sign == key) {
+                exists = true
+                var obj = opList[operator]
+            }
+        }
+        return {exists, obj}
+    }
+    const op = operatorCheck(event.key)
+    if (event.key == "Backspace") {
+        backspace()
+    } else if (event.key == "c") {
+        reset()
+    } else if (event.key == "=" || event.key == "Enter") {
+        operate()
+    } else if (isNumber) {
+        storeAlg(Number(event.key))
+    } else if (op.exists) {
+        addOperator(op.obj)
+    }
+})
